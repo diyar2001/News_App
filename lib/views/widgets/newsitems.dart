@@ -68,9 +68,7 @@ class NewsItem extends StatelessWidget {
                 SizedBox(
                   height: 5,
                 ),
-                SizedBox(
-                  height: 55,
-                  width: 250,
+                Expanded(
                   child: Text(
                     '${title}',
                     style: TextStyle(

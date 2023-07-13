@@ -30,7 +30,8 @@ class SqlHelper {
             description TEXT NULL,
             urlToImage TEXT NULL,
             publishedAt TEXT NULL,
-            content TEXT NULL
+            content TEXT NULL,
+            url TEXT NULL
           )
         ''');
       },
@@ -62,11 +63,5 @@ class SqlHelper {
     //here i am using urlToImage as items ID
     final result = db.delete('items', where: "urlToImage = '${id}'");
     return result;
-  }
-
-  Future alter() async {
-    final db = await database;
-    //here i am using urlToImage as items ID
-    db.execute('ALTER TABLE items ADD COLUMN url TEXT NULL');
   }
 }

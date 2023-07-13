@@ -85,7 +85,7 @@ class FavoriteController extends GetxController {
             margin: EdgeInsets.symmetric(horizontal: 10, vertical: 70)));
         getFavorite();
       } else {
-        Get.snackbar('Exist', 'The favorite list is already empty',
+        Get.snackbar('Empty', 'The favorite list is already empty',
             snackPosition: SnackPosition.BOTTOM,
             borderRadius: 50,
             colorText: primerycolor,
