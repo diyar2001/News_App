@@ -27,28 +27,69 @@ this application is created from scratch using flutter with some specifications:
 
 # Outputs
 - Splash screen
-  ![Screenshot_1689085731](https://github.com/diyar2001/News_App/assets/77636855/371fd29e-dabe-40fb-9ac6-b6e36aab5307)
+     <br><img src="https://github.com/diyar2001/News_App/assets/77636855/cfcd5a63-4f1c-49f8-8a25-3a6abb8991d2" width="400">
+
+
 - home screen
-  ![Screenshot_1689085902](https://github.com/diyar2001/News_App/assets/77636855/07bd1b5c-62fc-4002-9e1e-6ae6741a2576). ![Screenshot_1689085920](https://github.com/diyar2001/News_App/assets/77636855/48bc9be6-3ab0-40ad-895a-aad43ae0157d)
+     <br><table >
+     <tr>
+          <td><img src="https://github.com/diyar2001/News_App/assets/77636855/f25ebb61-3bd8-4c32-bde7-f911537488cc" width="400"></td>
+         <td><img src="https://github.com/diyar2001/News_App/assets/77636855/85e563b1-7f0f-406d-a61e-32b31c4c1fe5" width="400"></td>
+     </tr>
+  
+   
+ </table>
+ 
 - detail screen
-  ![Screenshot_1689085943](https://github.com/diyar2001/News_App/assets/77636855/ec1d64a1-877b-4014-9488-2b9b23cfea63)   
-![Screenshot_1689085953](https://github.com/diyar2001/News_App/assets/77636855/a6e9eada-ff74-43cf-9b9e-9d50b0c288f4)
+     <br><table >
+     <tr>
+         <td><img src="https://github.com/diyar2001/News_App/assets/77636855/c0f3a040-ac87-49da-bfaf-c3503a6fee69" width="400"></td>
+         <td><img src="https://github.com/diyar2001/News_App/assets/77636855/160c14f5-020c-4a3f-bc83-cbb7baa2f620" width="400"></td>
+     </tr>
+     <tr>
+         <td><img src="https://github.com/diyar2001/News_App/assets/77636855/b61d56e6-0dfa-4d05-874c-681a444f6a6a" width="400"></td>
+     </tr>
+   
+ </table>
+
+
+ 
 - descove screen
-  ![Screenshot_1689085975](https://github.com/diyar2001/News_App/assets/77636855/29c206c6-94f8-4ae2-9889-03ac78101af6) 
-![Screenshot_1689086376](https://github.com/diyar2001/News_App/assets/77636855/bd9375b3-d7f3-4027-aa94-767987844f02)
+    <br><table >
+     <tr>
+         <td><img src="https://github.com/diyar2001/News_App/assets/77636855/8786ac30-faa1-41d9-a0c7-1b3f93135d8a" width="400"></td>
+         <td><img src="https://github.com/diyar2001/News_App/assets/77636855/b2c44309-9bb5-4e30-97c0-613efbf5ebfd" width="400"></td>
+     </tr>
+  
+   
+ </table>
 - favorite screen
-  ![Screenshot![Screenshot_1689086420](https://github.com/diyar2001/News_App/assets/77636855/721bdea3-9a4b-49a9-bd53-64c8e84ec143)
-_1689086389](![Screenshot_1689086491](https://github.com/diyar2001/News_App/assets/77636855/d49a158f-b447-48c3-ba69-e8aca45a4cde)
-https://github.com/diyar2001/News_App/assets/77636855/4a54f614-b562-47ca-b9f9-fcbd0175ea3d).
-![Screenshot_1689086502](https://github.com/diyar2001/News_App/assets/77636855/7257d9ab-357c-4bd0-8f40-36146dbdfc6e)
+    <br><table >
+     <tr>
+         <td><img src="https://github.com/diyar2001/News_App/assets/77636855/e309d70e-6b81-469e-9bbd-0a7980cdafb9" width="400"></td>
+         <td><img src="https://github.com/diyar2001/News_App/assets/77636855/257e6490-4bd4-4f23-b5eb-e0e4312a4de7" width="400"></td>
+     </tr>
+     <tr>
+         <td><img src="https://github.com/diyar2001/News_App/assets/77636855/31d4a1ed-247a-448c-8c72-8eab41e7e212" width="400"></td>
+     </tr>
+   
+ </table>
 - video screen
-  ![Screenshot_1689086560](https://github.com/diyar2001/News_App/assets/77636855/8cd60857-2696-49f9-98f4-21ef9d0a8053)
+     <br><img src="https://github.com/diyar2001/News_App/assets/77636855/b19630a5-1fb9-450a-a38c-56c1e2c76b2d" width="400">
+ </table>
 
 
 # Dark Theme 
-![Screenshot_1689087327](https://github.com/diyar2001/News_App/assets/77636855/34b80e27-447c-40db-98df-8158a9df62ad)
-![Screenshot_1689087344](https://github.com/diyar2001/News_App/assets/77636855/be6aebd2-3a8b-4da4-9caf-dbe07e5022d5)
-![Uploading Screenshot_1689087337.png…]()
+   <br><table >
+     <tr>
+         <td><img src="https://github.com/diyar2001/News_App/assets/77636855/f80b8ea2-5a16-422d-9c47-11c8c7a798a1" width="400"></td>
+         <td><img src="https://github.com/diyar2001/News_App/assets/77636855/b7d70934-6a7c-4e3a-a2be-a9cd6e34dbb1" width="400"></td>
+     </tr>
+     <tr>
+         <td><img src="https://github.com/diyar2001/News_App/assets/77636855/5d51fd1e-16f7-4bb1-b19c-a1a0ad590c6e" width="400"></td>
+     </tr>
+   
+ </table>
 
 
 
