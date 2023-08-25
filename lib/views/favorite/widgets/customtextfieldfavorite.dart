@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../models/newsapi_model.dart';
+import '../../../data/models/newsapi_model.dart';
 
 class CustomTextFieldFavorite extends StatelessWidget {
   var icon;

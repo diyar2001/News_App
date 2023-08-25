@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:news_app/controllers/themecontroller.dart';
 import 'package:news_app/routes.dart';
 import 'package:news_app/utils/api_auth.dart';
-import 'package:news_app/views/screens/detail_screen.dart';
-import 'package:news_app/views/screens/homepage.dart';
+import 'package:news_app/views/detail/screens/detail_screen.dart';
+import 'package:news_app/mainpage.dart';
 import 'package:get/get.dart';
-import 'package:news_app/views/screens/splash_screen.dart';
+import 'package:news_app/views/splash/screens/splash_screen.dart';
 import 'sqlhelper.dart';
 
 void main() async {

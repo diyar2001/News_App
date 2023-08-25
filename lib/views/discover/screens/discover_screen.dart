@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:news_app/controllers/discover_controller.dart';
 import 'package:news_app/controllers/home_controller.dart';
 import 'package:news_app/utils/api_auth.dart';
-import 'package:news_app/views/screens/detail_screen.dart';
+import 'package:news_app/views/detail/screens/detail_screen.dart';
 import 'package:news_app/views/widgets/custombutton.dart';
-import 'package:news_app/views/widgets/customtextfield.dart';
+import 'package:news_app/views/discover/widgets/customtextfield.dart';
 import 'package:news_app/views/widgets/recommendeditems.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import '../widgets/recommendedshimmer.dart';
+import '../../widgets/recommendedshimmer.dart';
+import '../widgets/list_items.dart';
 
 class DiscoverScreen extends StatefulWidget {
   const DiscoverScreen({super.key});
@@ -36,7 +37,6 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
     // TODO: implement didChangeDependencies
     super.didChangeDependencies();
     discoverController.fetchData('/v2/everything', 'general');
-    print('update ..');
   }
 
   @override
@@ -106,21 +106,7 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
           SizedBox(
             height: 15,
           ),
-          Obx(() {
-            if (discoverController.dataList.isEmpty) {
-              return Expanded(child: RecommendeShimmer());
-            } else {
-              return Expanded(
-                  child: ListView.builder(
-                      itemCount: discoverController.dataList.length,
-                      itemBuilder: ((context, index) => GestureDetector(
-                            onTap: () => Get.toNamed('DetailScreen',arguments:discoverController.dataList[index] ),
-                            child: RecommendedItems(
-                              newsApiModel: discoverController.dataList[index]
-                            ),
-                          ))));
-            }
-          })
+          ListItems()
         ],
       ),
     );

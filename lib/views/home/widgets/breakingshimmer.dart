@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
-import '../widgets/newsitems.dart';
+import 'newsitems.dart';
 
 class BreakingShimmer extends StatelessWidget {
   BreakingShimmer({super.key});

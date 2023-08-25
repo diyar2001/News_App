@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:news_app/utils/api_auth.dart';
-import '../models/newsapi_model.dart';
+import '../data/models/newsapi_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:sqflite/sqflite.dart';
 import 'package:news_app/sqlhelper.dart';

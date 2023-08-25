@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:news_app/utils/api_auth.dart';
-import '../models/newsapi_model.dart';
+import '../data/models/newsapi_model.dart';
 import 'package:http/http.dart' as http;
 
 class HomeController extends GetxController {
@@ -10,11 +10,18 @@ class HomeController extends GetxController {
   final RxList<NewsApiModel> _recommendedList = <NewsApiModel>[].obs;
   final RxInt _recommendListLength = 5.obs;
   final Rx<ViewAllState> _viewAllState = ViewAllState.viewAll.obs;
+  final RxInt _activeIndex = 0.obs;
 
   List<NewsApiModel> get breakingList => _breakingList.value;
   List<NewsApiModel> get recommendedList => _recommendedList.value;
   int get recommendListLength => _recommendListLength.value;
   ViewAllState get viewAllState => _viewAllState.value;
+  int get activeIndex => _activeIndex.value;
+
+
+
+
+ 
 
   @override
   void onInit() {
@@ -24,11 +31,20 @@ class HomeController extends GetxController {
     getRecommendedNews('/v2/everything', 'general');
   }
 
+
+//set current index for carousel slider
+ int setActiveIndex(int index) {
+    _activeIndex.value = index;
+    return _activeIndex.value;
+  }
+
+
+
 // get breaking news
   getBreakingNews(String endpoint, String query) async {
     try {
       final uri =
-          Uri.https('newsapi.org', endpoint, {'q': query, 'apikey': apikey});
+          Uri.https('newsapi.org', endpoint, {'q': query,'apikey': apikey});
       final response = await http.get(uri);
       if (response.statusCode == 200) {
         final jsonData = jsonDecode(response.body);
@@ -44,6 +60,8 @@ class HomeController extends GetxController {
       print(e);
     }
   }
+
+
 
 //get data for recommended section
   getRecommendedNews(String endpoint, String query) async {
@@ -69,6 +87,11 @@ class HomeController extends GetxController {
     }
   }
 
+
+
+///
+///
+///
 //expand list to view all items change length from 4 to all
   viewAll() async {
     _viewAllState.value = ViewAllState.wait;

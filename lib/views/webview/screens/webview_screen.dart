@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:news_app/views/widgets/appbar.dart';
+import 'package:news_app/views/detail/widgets/appbar.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:get/get.dart';
 

@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/utils/api_auth.dart';
-import 'package:news_app/views/screens/video_screen.dart';
-import 'package:news_app/views/screens/detail_screen.dart';
-import 'package:news_app/views/screens/favorite_screen.dart';
-import 'package:news_app/views/screens/home_screen.dart';
-import 'package:news_app/views/widgets/appbar.dart';
-import 'package:news_app/views/widgets/newsitems.dart';
+import 'package:news_app/views/video/screens/video_screen.dart';
+import 'package:news_app/views/detail/screens/detail_screen.dart';
+import 'package:news_app/views/favorite/screens/favorite_screen.dart';
+import 'package:news_app/views/home/screens/home_screen.dart';
+import 'package:news_app/views/detail/widgets/appbar.dart';
+import 'package:news_app/views/home/widgets/newsitems.dart';
 import 'package:news_app/views/widgets/recommendeditems.dart';
-import '../widgets/custombutton.dart';
+import 'views/widgets/custombutton.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
-import '../screens/discover_screen.dart';
+import 'views/discover/screens/discover_screen.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter/services.dart';
 

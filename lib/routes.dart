@@ -1,8 +1,8 @@
 import 'package:get/get.dart';
-import 'package:news_app/views/screens/detail_screen.dart';
-import 'package:news_app/views/screens/homepage.dart';
-import 'package:news_app/views/screens/splash_screen.dart';
-import 'package:news_app/views/screens/webview_screen.dart';
+import 'package:news_app/views/detail/screens/detail_screen.dart';
+import 'package:news_app/mainpage.dart';
+import 'package:news_app/views/splash/screens/splash_screen.dart';
+import 'package:news_app/views/webview/screens/webview_screen.dart';
 
 class RouteHelper {
 

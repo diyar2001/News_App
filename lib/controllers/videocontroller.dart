@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:news_app/models/youtubevideo_model.dart';
+import 'package:news_app/data/models/youtubevideo_model.dart';
 import 'package:http/http.dart' as http;
-import 'package:news_app/models/youtubevideo_model_search.dart';
+import 'package:news_app/data/models/youtubevideo_model_search.dart';
 import 'package:news_app/utils/api_auth.dart';
 
 class VideoController extends GetxController {

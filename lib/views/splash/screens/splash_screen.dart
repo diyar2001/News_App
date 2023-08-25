@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:get/get.dart';
 
+import '../widgets/animated_img.dart';
+
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
@@ -44,17 +46,11 @@ class _SplashScreenState extends State<SplashScreen>
       body: Center(
         child: FadeTransition(
           opacity: _animationController,
-          child: AnimatedWidget(), // Replace with your animation widget
+          child: AnimatedImage(), // Replace with your animation widget
         ),
       ),
     );
   }
 }
 
-class AnimatedWidget extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    // Replace with your animation widget (e.g., Lottie, GIF, etc.)
-    return Lottie.asset('assets/images/animatednews.json');
-  }
-}
+

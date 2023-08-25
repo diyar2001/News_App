@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
-import '../widgets/newsitems.dart';
+import '../home/widgets/newsitems.dart';
 
 class RecommendeShimmer extends StatelessWidget {
   RecommendeShimmer({super.key});

@@ -12,6 +12,8 @@ class SqlHelper {
     return _database!;
   }
 
+
+//initial database
   Future<Database> initDatabase() async {
     print('Init ...');
     final databasesPath = await getDatabasesPath();
