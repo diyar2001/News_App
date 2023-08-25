@@ -1,12 +1,14 @@
 import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:news_app/models/youtubevideo_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:news_app/models/youtubevideo_model_search.dart';
-import 'package:news_app/utils/constants.dart';
+import 'package:news_app/utils/api_auth.dart';
 
 class VideoController extends GetxController {
-  var videoData = [].obs;
+  /// videoData list for saving url,title,pulisher
+  var _videoData = [].obs;
 
   @override
   void onInit() {
@@ -15,6 +17,11 @@ class VideoController extends GetxController {
     fetchVideo();
   }
 
+  get videoData => _videoData.value;
+
+  ///
+  ///
+  ///fetching videos from YouTube API
   fetchVideo() async {
     try {
       String? nextPageToken; // Store the next page token
@@ -22,7 +29,7 @@ class VideoController extends GetxController {
           'https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&chart=mostPopular&key=${googleApikey}&accept=application/json';
 
       //till the end of json data repeat this procce of adding new tokens
-      while (true) {
+      for (int i = 0; i < 10; i++) {
         final Uri uri = Uri.parse(apiUrl +
             (nextPageToken != null ? '&pageToken=$nextPageToken' : ''));
         final http.Response response = await http.get(uri);
@@ -32,7 +39,7 @@ class VideoController extends GetxController {
           final List<dynamic> items = jsonData['items'];
 
           for (var data in items) {
-            videoData.add(YoutubeModel.fromJson(data));
+            _videoData.value.add(YoutubeModel.fromJson(data));
           }
 
           nextPageToken = jsonData['nextPageToken']; // Get the next page token
@@ -47,24 +54,25 @@ class VideoController extends GetxController {
         }
       }
 
-      print('Total videos fetched: ${videoData.length}');
-      print(videoData.last.channelTitle);
+      debugPrint('Total videos fetched: ${_videoData.value.length}');
     } catch (e) {
       print('An error occurred: $e');
     }
   }
 
-//search for items
+//
+//
+//search for videos from YouTube API
   searchVideo(String query) async {
     try {
-      videoData.clear(); // Clear the previous video data
+      _videoData.value.clear(); // Clear the previous video data
 
       String? nextPageToken; // Store the next page token
 
       final String apiUrl =
           'https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=10&type=video&q=$query&key=$googleApikey&accept=application/json';
 
-      while (true) {
+      for (int i = 0; i < 10; i++) {
         final Uri uri = Uri.parse(apiUrl +
             (nextPageToken != null ? '&pageToken=$nextPageToken' : ''));
         final http.Response response = await http.get(uri);
@@ -74,7 +82,7 @@ class VideoController extends GetxController {
           final List<dynamic> items = jsonData['items'];
 
           for (var data in items) {
-            videoData.add(YoutubeModelSearch.fromJson(data));
+            _videoData.value.add(YoutubeModelSearch.fromJson(data));
           }
 
           nextPageToken = jsonData['nextPageToken']; // Get the next page token
@@ -89,7 +97,7 @@ class VideoController extends GetxController {
         }
       }
 
-      print('Total videos fetched: ${videoData.length}');
+      print('Total videos fetched: ${_videoData.value.length}');
     } catch (e) {
       print('An error occurred: $e');
     }

@@ -47,7 +47,7 @@ class FavoriteScreen extends StatelessWidget {
           height: 25,
         ),
         Obx(() {
-          if (favoritecontroller.favoriteData.value.isEmpty) {
+          if (favoritecontroller.favoriteData.isEmpty) {
             return Expanded(
               child: Lottie.network(
                   'https://assets2.lottiefiles.com/packages/lf20_6FI8sRTSYl.json'),
@@ -55,35 +55,17 @@ class FavoriteScreen extends StatelessWidget {
           } else {
             return Expanded(
                 child: ListView.builder(
-                    itemCount: favoritecontroller.favoriteData.value.length,
+                    itemCount: favoritecontroller.favoriteData.length,
                     itemBuilder: ((context, index) => GestureDetector(
                           onDoubleTap: (() => favoritecontroller.removeThis(
                               favoritecontroller
-                                  .favoriteData.value[index].urltoimage)),
-                          onTap: () => Get.to(() => DetailScreen(
-                                favoriteItem: favoritecontroller
-                                    .favoriteData.value[index],
-                                category: 'Favorite',
-                                name: favoritecontroller
-                                    .favoriteData.value[index].name,
-                                imageUrl: favoritecontroller
-                                    .favoriteData.value[index].urltoimage,
-                                title: favoritecontroller
-                                    .favoriteData.value[index].title,
-                                content: favoritecontroller
-                                    .favoriteData.value[index].content,
-                                publishedat: favoritecontroller
-                                    .favoriteData.value[index].publishedat,
-                                url: favoritecontroller
-                                    .favoriteData.value[index].url,
-                              )),
+                                  .favoriteData[index].urltoimage)),
+                          onTap: () => Get.toNamed('DetailScreen',
+                              arguments:
+                                  favoritecontroller.favoriteData[index]),
                           child: RecommendedItems(
-                            author: favoritecontroller
-                                .favoriteData.value[index].author,
-                            imageUrl: favoritecontroller
-                                .favoriteData.value[index].urltoimage,
-                            title: favoritecontroller
-                                .favoriteData.value[index].title,
+                            newsApiModel:
+                                favoritecontroller.favoriteData[index],
                           ),
                         ))));
           }

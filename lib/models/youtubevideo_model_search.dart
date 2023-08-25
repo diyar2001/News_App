@@ -15,7 +15,6 @@ class YoutubeModelSearch {
 
   factory YoutubeModelSearch.fromJson(Map<String, dynamic> json) {
     final snippet = json['snippet'];
-    final statistics = json['statistics'];
 
     return YoutubeModelSearch(
       id: json['id']['videoId'],

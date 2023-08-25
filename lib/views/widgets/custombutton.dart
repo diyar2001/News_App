@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class CustomButton extends StatelessWidget {
   Color color;
   var icon;
-  
+
   CustomButton({
     super.key,
     this.color = const Color.fromARGB(255, 241, 237, 237),
@@ -15,13 +15,11 @@ class CustomButton extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(10),
       decoration: BoxDecoration(shape: BoxShape.circle, color: color),
-      child: icon,
+      child: AnimatedRotation(
+        duration: Duration(seconds: 3),
+        turns: 1,
+        child: icon,
+      ),
     );
   }
 }
-
-
-
-
-
-

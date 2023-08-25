@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:news_app/utils/constants.dart';
+import 'package:news_app/utils/api_auth.dart';
 import '../models/newsapi_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:sqflite/sqflite.dart';
@@ -9,7 +9,9 @@ import 'package:news_app/sqlhelper.dart';
 
 class FavoriteController extends GetxController {
   SqlHelper sqldb = SqlHelper();
-  RxList<NewsApiModel> favoriteData = <NewsApiModel>[].obs;
+  RxList<NewsApiModel> _favoriteData = <NewsApiModel>[].obs;
+
+  get favoriteData => _favoriteData.value;
 
   @override
   void onInit() async {
@@ -22,7 +24,7 @@ class FavoriteController extends GetxController {
   void addFavorite(NewsApiModel newsItem) async {
     try {
       bool isExistingItem =
-          favoriteData.any((item) => item.title == newsItem.title);
+          _favoriteData.any((item) => item.title == newsItem.title);
       if (isExistingItem) {
         debugPrint('true');
         Get.snackbar(
@@ -30,19 +32,19 @@ class FavoriteController extends GetxController {
           'This item is already exist',
           snackPosition: SnackPosition.BOTTOM,
           borderRadius: 50,
-          colorText: primerycolor,
+          colorText: Colors.black,
           padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           margin: EdgeInsets.all(10),
         );
       } else {
         debugPrint('false');
-        favoriteData.clear();
+        _favoriteData.clear();
         sqldb.addItem(newsItem.toJson()).then((value) => Get.snackbar(
               'Done',
               'successfully added into favorites list',
               snackPosition: SnackPosition.BOTTOM,
               borderRadius: 50,
-              colorText: primerycolor,
+              colorText: Colors.black,
               padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               margin: EdgeInsets.all(10),
             ));
@@ -66,7 +68,7 @@ class FavoriteController extends GetxController {
         }
       }
 
-      favoriteData.assignAll(uniqueData);
+      _favoriteData.assignAll(uniqueData);
     } catch (e) {
       print(e);
     }
@@ -75,12 +77,12 @@ class FavoriteController extends GetxController {
   //remove items form list of favorites
   removeAll() {
     try {
-      if (favoriteData.isNotEmpty) {
+      if (_favoriteData.isNotEmpty) {
         sqldb.removeAll().then((value) => Get.snackbar(
             'Done', 'All datas successfully deleted',
             snackPosition: SnackPosition.BOTTOM,
             borderRadius: 50,
-            colorText: primerycolor,
+            colorText: Colors.black,
             padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             margin: EdgeInsets.symmetric(horizontal: 10, vertical: 70)));
         getFavorite();
@@ -88,7 +90,7 @@ class FavoriteController extends GetxController {
         Get.snackbar('Empty', 'The favorite list is already empty',
             snackPosition: SnackPosition.BOTTOM,
             borderRadius: 50,
-            colorText: primerycolor,
+            colorText: Colors.black,
             padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             margin: EdgeInsets.symmetric(horizontal: 10, vertical: 70));
       }
@@ -103,7 +105,7 @@ class FavoriteController extends GetxController {
           'Done', 'This item successfully deleted',
           snackPosition: SnackPosition.BOTTOM,
           borderRadius: 50,
-          colorText: primerycolor,
+          colorText: Colors.black,
           padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           margin: EdgeInsets.symmetric(horizontal: 10, vertical: 70)));
       getFavorite();
@@ -115,11 +117,11 @@ class FavoriteController extends GetxController {
 //get item by title
   getItem(String searchText) {
     try {
-      List<NewsApiModel> filteredList = favoriteData
+      List<NewsApiModel> filteredList = _favoriteData
           .where((item) =>
               item.title.toLowerCase().contains(searchText.toLowerCase()))
           .toList();
-      favoriteData.assignAll(filteredList);
+      _favoriteData.assignAll(filteredList);
     } catch (e) {
       debugPrint(e.toString());
     }

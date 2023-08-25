@@ -1,64 +1,60 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:news_app/utils/constants.dart';
-import 'package:news_app/views/screens/homepage.dart';
 import 'package:lottie/lottie.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:get/get.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
   @override
-  State<SplashScreen> createState() => _SplashScreenState();
+  _SplashScreenState createState() => _SplashScreenState();
 }
 
 class _SplashScreenState extends State<SplashScreen>
-    with TickerProviderStateMixin {
-  late final AnimationController _controller;
+    with SingleTickerProviderStateMixin {
+  late AnimationController _animationController;
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    _controller = AnimationController(vsync: this,duration: Duration(milliseconds: 500
-    ));
-    Future.delayed(Duration(seconds: 10), (() => Get.to(HomePage())));
+    _animationController = AnimationController(
+      vsync: this,
+      duration:const Duration(seconds: 2), // Adjust the animation duration
+    );
+
+    _animationController.forward();
+
+    _animationController.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        // Animation completed, navigate to the next screen
+        Get.offAllNamed('/');
+      }
+    });
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
+    _animationController.dispose();
     super.dispose();
-    _controller.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        child: Scaffold(
-      body: Container(
-        color: Color.fromARGB(255, 255, 247, 225),
-        alignment: Alignment.bottomCenter,
-        child: Column(
-          children: [
-            Expanded(
-              flex: 2,
-              child: LottieBuilder.asset(
-                'assets/images/spashscreen.json', 
-                addRepaintBoundary: true,
-                repeat: false,
-                controller: _controller,
-                onLoaded: (composition) {
-                  // Configure the AnimationController with the duration of the
-                  // Lottie file and start the animation.
-                  _controller.forward();
-                },
-              ),
-            ),
-            Expanded(child: LoadingAnimationWidget.hexagonDots(color: Colors.blueAccent,size: 50))
-          ],
+    return Scaffold(
+      backgroundColor: Colors.white, // Set your background color
+      body: Center(
+        child: FadeTransition(
+          opacity: _animationController,
+          child: AnimatedWidget(), // Replace with your animation widget
         ),
       ),
-    ));
+    );
+  }
+}
+
+class AnimatedWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    // Replace with your animation widget (e.g., Lottie, GIF, etc.)
+    return Lottie.asset('assets/images/animatednews.json');
   }
 }

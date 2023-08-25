@@ -35,18 +35,18 @@ class VideoScreen extends StatelessWidget {
             height: 25,
           ),
           Obx(() {
-            if (videoController.videoData.value.isEmpty) {
+            if (videoController.videoData.isEmpty) {
               return Center(
                 child: CircularProgressIndicator(),
               );
             } else {
               return Expanded(
                   child: ListView.builder(
-                      itemCount: videoController.videoData.value.length,
+                      itemCount: videoController.videoData.length,
                       itemBuilder: ((context, index) => VideoCard(
-                            videoId: videoController.videoData.value[index].id,
-                            channel: videoController.videoData.value[index].channelTitle,
-                            title: videoController.videoData.value[index].title,
+                            videoId: videoController.videoData[index].id,
+                            channel: videoController.videoData[index].channelTitle,
+                            title: videoController.videoData[index].title,
                           ))));
             }
           })

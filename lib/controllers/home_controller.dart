@@ -1,52 +1,55 @@
 import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:news_app/utils/constants.dart';
+import 'package:news_app/utils/api_auth.dart';
 import '../models/newsapi_model.dart';
 import 'package:http/http.dart' as http;
 
 class HomeController extends GetxController {
-  RxList<NewsApiModel> breakingList = <NewsApiModel>[].obs;
-  RxList<NewsApiModel> recommendedList = <NewsApiModel>[].obs;
-  RxInt recommendListLength = 5.obs;
+  final RxList<NewsApiModel> _breakingList = <NewsApiModel>[].obs;
+  final RxList<NewsApiModel> _recommendedList = <NewsApiModel>[].obs;
+  final RxInt _recommendListLength = 5.obs;
+  final Rx<ViewAllState> _viewAllState = ViewAllState.viewAll.obs;
+
+  List<NewsApiModel> get breakingList => _breakingList.value;
+  List<NewsApiModel> get recommendedList => _recommendedList.value;
+  int get recommendListLength => _recommendListLength.value;
+  ViewAllState get viewAllState => _viewAllState.value;
 
   @override
   void onInit() {
     // TODO: implement onInit
     super.onInit();
-    getBreakNews('/v2/top-headlines', 'general');
+    getBreakingNews('/v2/top-headlines', 'general');
     getRecommendedNews('/v2/everything', 'general');
   }
 
 // get breaking news
-  getBreakNews(String endpoint, String query) async {
+  getBreakingNews(String endpoint, String query) async {
     try {
       final uri =
           Uri.https('newsapi.org', endpoint, {'q': query, 'apikey': apikey});
       final response = await http.get(uri);
       if (response.statusCode == 200) {
         final jsonData = jsonDecode(response.body);
-        print(jsonData['totalResults']);
         for (var item in jsonData['articles']) {
           if (item['urlToImage'] != null) {
-            breakingList.add(NewsApiModel.fromJson(item));
+            _breakingList.add(NewsApiModel.fromJson(item));
           }
         }
       } else {
-        print(response.statusCode.toString());
+        debugPrint(response.statusCode.toString());
       }
     } catch (e) {
       print(e);
     }
   }
 
-
-
-
 //get data for recommended section
   getRecommendedNews(String endpoint, String query) async {
     try {
-      final uri =
-          Uri.https('newsapi.org', endpoint, {'q': query,'sortBy':'popularity', 'apikey': apikey});
+      final uri = Uri.https('newsapi.org', endpoint,
+          {'q': query, 'sortBy': 'popularity', 'apikey': apikey});
       final response = await http.get(uri);
       print(uri);
       if (response.statusCode == 200) {
@@ -54,8 +57,8 @@ class HomeController extends GetxController {
         print(jsonData['totalResults']);
         for (var item in jsonData['articles']) {
           if (item['urlToImage'] != null) {
-            recommendedList.add(NewsApiModel.fromJson(item));
-            recommendedList.value = recommendedList.reversed.toList();
+            _recommendedList.value.add(NewsApiModel.fromJson(item));
+            _recommendedList.value = _recommendedList.value.reversed.toList();
           }
         }
       } else {
@@ -66,11 +69,17 @@ class HomeController extends GetxController {
     }
   }
 
-
-
 //expand list to view all items change length from 4 to all
-  viewAll() {
-    recommendListLength.value = recommendedList.value.length;
-    print(recommendListLength);
+  viewAll() async {
+    _viewAllState.value = ViewAllState.wait;
+
+    //creating 2 seconds delay for better user expiriance
+    await Future.delayed(const Duration(seconds: 1), () {});
+    _recommendListLength.value = _recommendedList.length;
+    _viewAllState.value = ViewAllState.remove;
   }
 }
+
+//when i click on view all button i have
+//Three cases instead of using bool it only True,False
+enum ViewAllState { viewAll, wait, remove }

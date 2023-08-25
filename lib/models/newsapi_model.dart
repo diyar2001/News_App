@@ -17,7 +17,8 @@ class NewsApiModel {
       this.publishedat,
       this.content,
       this.url});
-
+ 
+ //to convert API data from json to model object
   NewsApiModel.fromJson(Map<String, dynamic> json) {
     name = json['source']['name'];
     author = json['author'];
@@ -29,7 +30,7 @@ class NewsApiModel {
     url = json['url'];
   }
 
-  //to convert sql data from json to object
+  //to convert sql data from json to model object
   NewsApiModel.sqlFromJson(Map<String, dynamic> json) {
     int startsrc = json['source'].toString().indexOf('=') + 1;
     int endsrc = json['source'].toString().indexOf('}');

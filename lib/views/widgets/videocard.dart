@@ -17,7 +17,7 @@ class VideoCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = YoutubePlayerController(
       initialVideoId: videoId,
-      flags: YoutubePlayerFlags(
+      flags: const YoutubePlayerFlags(
         enableCaption: true,
         captionLanguage: 'en',
         autoPlay: false,
@@ -42,11 +42,11 @@ class VideoCard extends StatelessWidget {
                 ProgressBar(isExpanded: true),
                 RemainingDuration(),
                 PlayPauseButton(),
-                PlaybackSpeedButton(),
+                const PlaybackSpeedButton(),
               ],
               showVideoProgressIndicator: true,
               progressIndicatorColor: Colors.amber,
-              progressColors: ProgressBarColors(
+              progressColors: const ProgressBarColors(
                 playedColor: Colors.amber,
                 handleColor: Colors.amberAccent,
               ),
@@ -58,15 +58,15 @@ class VideoCard extends StatelessWidget {
                 children: [
                   Text(
                     title,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  SizedBox(height: 8.0),
+                  const SizedBox(height: 8.0),
                   Text(
                     channel,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 14,
                       color: Colors.grey,
                     ),

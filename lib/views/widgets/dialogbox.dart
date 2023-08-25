@@ -7,13 +7,15 @@ class DialogBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15.0), 
+      ),
       title: Text('Delete All'),
       content: Text('Do you want delete all favorite items'),
       actions: [
         TextButton(
           onPressed: () {
-            // Code to handle the action
-            Navigator.of(context).pop(); // Close the dialog
+            Navigator.of(context).pop(); 
           },
           child: Text('Cancel'),
         ),

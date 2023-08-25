@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:news_app/utils/constants.dart';
+import 'package:news_app/utils/api_auth.dart';
 import 'package:news_app/views/screens/video_screen.dart';
 import 'package:news_app/views/screens/detail_screen.dart';
 import 'package:news_app/views/screens/favorite_screen.dart';
@@ -13,8 +13,6 @@ import '../screens/discover_screen.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter/services.dart';
 
-
-
 class HomePage extends StatefulWidget {
   HomePage({super.key});
 
@@ -26,17 +24,11 @@ class _HomePageState extends State<HomePage> {
   int _selectedindex = 0;
 
   final List<Widget> _screens = [
-     HomeScreen(),
+    HomeScreen(),
     const DiscoverScreen(),
-     FavoriteScreen(),
-     VideoScreen()
+    FavoriteScreen(),
+    VideoScreen()
   ];
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,37 +46,37 @@ class _HomePageState extends State<HomePage> {
                 size: 30,
               ),
               title: Text("Home"),
-              selectedColor: navItems,
+              selectedColor: Theme.of(context).accentColor,
             ),
 
-            /// Likes
+            /// discover
             SalomonBottomBarItem(
               icon: FaIcon(
-                FontAwesomeIcons.earth,
+                FontAwesomeIcons.earthAmericas,
                 size: 25,
               ),
               title: Text("Descover"),
-              selectedColor: navItems,
+              selectedColor: Theme.of(context).accentColor,
             ),
 
-            /// Search
+            /// favorite
             SalomonBottomBarItem(
               icon: Icon(
                 Icons.bookmark_outline,
                 size: 30,
               ),
               title: Text("Favorite"),
-              selectedColor: navItems,
+              selectedColor: Theme.of(context).accentColor,
             ),
 
-            /// Profile
+            /// video
             SalomonBottomBarItem(
               icon: Icon(
                 Icons.video_collection_outlined,
                 size: 30,
               ),
               title: Text("Video"),
-              selectedColor: navItems,
+              selectedColor: Theme.of(context).accentColor,
             ),
           ],
         ),

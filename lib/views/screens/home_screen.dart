@@ -10,6 +10,8 @@ import '../../controllers/home_controller.dart';
 import 'package:get/get.dart';
 import '../widgets/breakingshimmer.dart';
 import '../widgets/recommendedshimmer.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:shimmer/shimmer.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({super.key});
@@ -19,22 +21,13 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
-  final HomeController homeController = Get.put(HomeController());
-
-  final themeController = Get.put(ThemeController());
-
-  late AnimationController _animationController;
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    _animationController =
-        AnimationController(vsync: this, duration: Duration(seconds: 1));
-  }
+  int activeIndex = 0;
 
   @override
   Widget build(BuildContext context) {
+    final HomeController homeController = Get.put(HomeController());
+    final ThemeController themeController = Get.put(ThemeController());
+
     return Column(
       children: [
         Padding(
@@ -42,22 +35,27 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                'News App',
-                style: TextStyle(
-                  fontFamily: 'cursive',
-                  fontSize: 35,
-                  fontWeight: FontWeight.bold,
-                  color: Theme.of(context).accentColor
+              Shimmer.fromColors(
+                baseColor: Theme.of(context).accentColor,
+                highlightColor: const Color.fromARGB(255, 192, 202, 207),
+                period: const Duration(seconds: 10),
+                child: Text(
+                  'News App',
+                  style: TextStyle(
+                      fontFamily: 'cursive',
+                      fontSize: 35,
+                      wordSpacing: 2,
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).accentColor),
                 ),
               ),
               Obx(() {
                 return GestureDetector(
                     onTap: (() => themeController.changeTheme()),
                     child: CustomButton(
-                        icon: themeController.currentTheme.value == lightTheme
-                            ? Icon(Icons.light_mode)
-                            : Icon(Icons.dark_mode)));
+                        icon: themeController.currentTheme == lightTheme
+                            ? const Icon(Icons.light_mode)
+                            : const Icon(Icons.dark_mode)));
               }),
             ],
           ),
@@ -74,118 +72,106 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             ],
           ),
         ),
-        const SizedBox(
-          height: 15,
-        ),
         Obx(() {
-          if (homeController.breakingList.value.isEmpty) {
-            return BreakingShimmer();
+          if (homeController.breakingList.isEmpty) {
+            return Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: BreakingShimmer(),
+            );
           } else {
             return Expanded(
                 child: CarouselSlider.builder(
-              itemCount: homeController.breakingList.value.length,
+              itemCount: homeController.breakingList.length,
               itemBuilder:
                   (BuildContext context, int itemIndex, int pageViewIndex) =>
                       GestureDetector(
-                onTap: () => Get.to(() => DetailScreen(
-                      favoriteItem:
-                          homeController.breakingList.value[itemIndex],
-                      category: 'General',
-                      name: homeController.breakingList.value[itemIndex].name,
-                      imageUrl: homeController
-                          .breakingList.value[itemIndex].urltoimage,
-                      title: homeController.breakingList.value[itemIndex].title,
-                      content:
-                          homeController.breakingList.value[itemIndex].content,
-                      publishedat: homeController
-                          .breakingList.value[itemIndex].publishedat,
-                      url: homeController.breakingList.value[itemIndex].url,
-                    )),
+                onTap: () => Get.toNamed('/DetailScreen',
+                    arguments: homeController.breakingList[itemIndex]),
                 child: NewsItem(
-                  title: homeController.breakingList.value[itemIndex].title,
-                  publishedat:
-                      homeController.breakingList.value[itemIndex].publishedat,
-                  imageUrl:
-                      homeController.breakingList.value[itemIndex].urltoimage,
-                  name: homeController.breakingList.value[itemIndex].name,
+                  newsApiModel: homeController.breakingList[itemIndex],
                 ),
               ),
               options: CarouselOptions(
-                height: 400,
-                aspectRatio: 18 / 9,
-                viewportFraction: 0.8,
+                height: MediaQuery.of(context).size.height / 4,
                 initialPage: 0,
                 enableInfiniteScroll: true,
                 reverse: false,
                 autoPlay: true,
-                autoPlayInterval: Duration(seconds: 3),
-                autoPlayAnimationDuration: Duration(milliseconds: 800),
+                autoPlayInterval: const Duration(seconds: 3),
+                autoPlayAnimationDuration: const Duration(milliseconds: 800),
                 autoPlayCurve: Curves.fastOutSlowIn,
                 enlargeCenterPage: true,
                 enlargeFactor: 0.3,
-                onPageChanged: null,
+                onPageChanged: ((index, reason) {
+                  setState(() {
+                    activeIndex = index;
+                  });
+                }),
                 scrollDirection: Axis.horizontal,
               ),
             ));
           }
         }),
-        const SizedBox(
-          height: 20,
+        AnimatedSmoothIndicator(
+          activeIndex: activeIndex,
+          count: homeController.breakingList.length,
+          effect: ExpandingDotsEffect(
+              dotHeight: 10, activeDotColor: Theme.of(context).accentColor),
+        ),
+        SizedBox(
+          height: MediaQuery.of(context).size.height / 40,
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
+              const Text(
                 'Recommendation',
                 style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
               ),
-              GestureDetector(
-                onTap: (() => homeController.viewAll()),
-                child: Text(
-                  'View all',
-                  style: TextStyle(fontSize: 14, color: Colors.blue),
-                ),
-              ),
+              Obx(() {
+                switch (homeController.viewAllState) {
+                  case ViewAllState.viewAll:
+                    return GestureDetector(
+                      onTap: (() => homeController.viewAll()),
+                      child: Text(
+                        'View All',
+                        style: TextStyle(color: Colors.blue),
+                      ),
+                    );
+                  case ViewAllState.wait:
+                    return Center(
+                      child: SizedBox(
+                        height: MediaQuery.of(context).size.height / 50,
+                        width: MediaQuery.of(context).size.height / 50,
+                        child: CircularProgressIndicator(
+                          color: Theme.of(context).accentColor,
+                        ),
+                      ),
+                    );
+                  case ViewAllState.remove:
+                    return const Text('');
+                }
+              }),
             ],
           ),
         ),
-        const SizedBox(
-          height: 15,
+        SizedBox(
+          height: MediaQuery.of(context).size.height / 100,
         ),
         Obx(() {
-          if (homeController.recommendedList.value.isEmpty) {
+          if (homeController.recommendedList.isEmpty) {
             return Expanded(child: RecommendeShimmer());
           } else {
             return Expanded(
                 child: ListView.builder(
-                    itemCount: homeController.recommendListLength.value,
+                    itemCount: homeController.recommendListLength,
                     itemBuilder: ((context, index) => GestureDetector(
-                          onTap: () => Get.to(() => DetailScreen(
-                                favoriteItem:
-                                    homeController.recommendedList.value[index],
-                                category: 'General',
-                                name: homeController
-                                    .recommendedList.value[index].name,
-                                imageUrl: homeController
-                                    .recommendedList.value[index].urltoimage,
-                                title: homeController
-                                    .recommendedList.value[index].title,
-                                content: homeController
-                                    .recommendedList.value[index].content,
-                                publishedat: homeController
-                                    .recommendedList.value[index].publishedat,
-                                url: homeController
-                                    .recommendedList.value[index].url,
-                              )),
+                          onTap: () => Get.toNamed('DetailScreen',
+                              arguments: homeController.recommendedList[index]),
                           child: RecommendedItems(
-                            author: homeController
-                                .recommendedList.value[index].author,
-                            imageUrl: homeController
-                                .recommendedList.value[index].urltoimage,
-                            title: homeController
-                                .recommendedList.value[index].title,
+                            newsApiModel: homeController.recommendedList[index],
                           ),
                         ))));
           }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/controllers/discover_controller.dart';
 import 'package:news_app/controllers/home_controller.dart';
-import 'package:news_app/utils/constants.dart';
+import 'package:news_app/utils/api_auth.dart';
 import 'package:news_app/views/screens/detail_screen.dart';
 import 'package:news_app/views/widgets/custombutton.dart';
 import 'package:news_app/views/widgets/customtextfield.dart';
@@ -107,37 +107,16 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
             height: 15,
           ),
           Obx(() {
-            if (discoverController.dataList.value.isEmpty) {
+            if (discoverController.dataList.isEmpty) {
               return Expanded(child: RecommendeShimmer());
             } else {
               return Expanded(
                   child: ListView.builder(
-                      itemCount: discoverController.dataList.value.length,
+                      itemCount: discoverController.dataList.length,
                       itemBuilder: ((context, index) => GestureDetector(
-                            onTap: () => Get.to(() => DetailScreen(
-                                  favoriteItem:
-                                      discoverController.dataList.value[index],
-                                  category: categories[selectedIndex],
-                                  name: discoverController
-                                      .dataList.value[index].name,
-                                  imageUrl: discoverController
-                                      .dataList.value[index].urltoimage,
-                                  title: discoverController
-                                      .dataList.value[index].title,
-                                  content: discoverController
-                                      .dataList.value[index].content,
-                                  publishedat: discoverController
-                                      .dataList.value[index].publishedat,
-                                  url: discoverController
-                                      .dataList.value[index].url,
-                                )),
+                            onTap: () => Get.toNamed('DetailScreen',arguments:discoverController.dataList[index] ),
                             child: RecommendedItems(
-                              author: discoverController
-                                  .dataList.value[index].author,
-                              imageUrl: discoverController
-                                  .dataList.value[index].urltoimage,
-                              title: discoverController
-                                  .dataList.value[index].title,
+                              newsApiModel: discoverController.dataList[index]
                             ),
                           ))));
             }

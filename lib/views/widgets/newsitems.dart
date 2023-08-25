@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:news_app/utils/constants.dart';
+import 'package:news_app/models/newsapi_model.dart';
+import 'package:news_app/utils/api_auth.dart';
 
 class NewsItem extends StatelessWidget {
-  var imageUrl;
-  var name;
-  var title;
-  var publishedat;
-  NewsItem({super.key, required this.imageUrl, required this.name, required this.title, required this.publishedat});
+  NewsApiModel? newsApiModel;
+  NewsItem(
+      {super.key,
+      this.newsApiModel});
 
   @override
   Widget build(BuildContext context) {
@@ -14,44 +14,41 @@ class NewsItem extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
         image: DecorationImage(
-          image: Image.network(imageUrl).image,
+          image: Image.network(newsApiModel!.urltoimage).image,
           fit: BoxFit.cover,
         ),
       ),
       child: Stack(
         children: [
           Opacity(
-            opacity: 0.4, // Adjust the opacity value as desired
+            opacity: 0.4, 
             child: Container(
               decoration: BoxDecoration(
                   color: Colors.black, borderRadius: BorderRadius.circular(20)),
             ),
           ),
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+            padding: EdgeInsets.only(right: 20,left: 20, top: MediaQuery.of(context).size.height/90),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                InkWell(
-                  onTap: (() => print('')),
-                  child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                    child: Text(
-                      'General',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                        color: navItems),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                  child: Text(
+                    'General',
+                    style: TextStyle(color:Colors.white),
                   ),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      color: Theme.of(context).accentColor),
                 ),
                 SizedBox(
-                  height: 75,
+                  height: MediaQuery.of(context).size.height/10,
                 ),
                 Row(
                   children: [
                     Text(
-                      name.toString(),
+                      newsApiModel!.name.toString(),
                       style:
                           TextStyle(color: Color.fromARGB(255, 209, 202, 202)),
                     ),
@@ -59,7 +56,7 @@ class NewsItem extends StatelessWidget {
                       width: 5,
                     ),
                     Text(
-                      '. ${publishedat}',
+                      '. ${newsApiModel!.publishedat}',
                       style:
                           TextStyle(color: Color.fromARGB(255, 209, 202, 202)),
                     )
@@ -70,11 +67,13 @@ class NewsItem extends StatelessWidget {
                 ),
                 Expanded(
                   child: Text(
-                    '${title}',
+                    '${newsApiModel!.title}',
                     style: TextStyle(
                         fontSize: 16,
                         color: Colors.white,
                         fontWeight: FontWeight.bold),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
                   ),
                 )
               ],
